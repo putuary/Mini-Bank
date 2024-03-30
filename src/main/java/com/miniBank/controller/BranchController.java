@@ -59,4 +59,29 @@ public class BranchController {
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(response);
     }
+
+    @PutMapping
+    public ResponseEntity<CommonResponse<Branch>> updateBranch (@RequestBody Branch branch) {
+        Branch result = branchService.updateBranch(branch);
+        String message =String.format(Constant.MESSAGE_SUCCESS_UPDATE, "Branch");
+        CommonResponse<Branch> response=new CommonResponse<>();
+        response.setStatusCode(HttpStatus.OK.value());
+        response.setData(result);
+        response.setMessage(message);
+        return ResponseEntity.status(response.getStatusCode())
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(response);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<CommonResponse<Branch>> deleteBranch (@PathVariable String id) {
+        branchService.deleteBranch(id);
+        String message =String.format(Constant.MESSAGE_SUCCESS_DELETE, "Branch", id);
+        CommonResponse<Branch> response=new CommonResponse<>();
+        response.setStatusCode(HttpStatus.OK.value());
+        response.setMessage(message);
+        return ResponseEntity.status(response.getStatusCode())
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(response);
+    }
 }
